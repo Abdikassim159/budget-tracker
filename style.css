@@ -1,4 +1,5 @@
 
+
 /* General Page Styling */
 body {
     font-family: Arial, sans-serif;
@@ -59,4 +60,142 @@ h2 {
 
 label {
     font-weight: bold;
+}
+
+
+
+
+/* --- Logo inside the header --- */
+#main-header img {
+    display: block;
+    margin: 0 auto 10px auto;
+    border-radius: 8px;
+}
+
+/* --- The select dropdown should look like the inputs --- */
+select {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+    margin-bottom: 18px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: white;
+    font-family: Arial, sans-serif;
+}
+
+/* --- The Add Expense button --- */
+#add-expense-btn {
+    padding: 12px 20px;
+    background-color: #1e3a5f;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;                 /* hand cursor on hover */
+    transition: background-color 0.2s ease;
+}
+
+#add-expense-btn:hover {
+    background-color: #16304f;
+}
+
+/* --- Expenses Table --- */
+.expenses-list table {
+    width: 100%;
+    border-collapse: collapse;       /* required by brief */
+    margin-top: 15px;
+    background-color: white;
+}
+
+/* Borders and padding inside every cell */
+.expenses-list th,
+.expenses-list td {
+    border: 1px solid #999;
+    padding: 10px 14px;
+    text-align: left;
+}
+
+/* Colored header row */
+.expenses-list thead th {
+    background-color: #1e3a5f;
+    color: white;
+    font-weight: bold;
+}
+
+/* Alternating row colors */
+.expenses-list tbody tr:nth-child(even) {
+    background-color: #dbe7f3;
+}
+
+/* Row hover effect */
+.expenses-list tbody tr:hover {
+    background-color: #c3d8ec;
+    transition: background-color 0.2s ease;
+}
+
+/* --- Collapsible help box --- */
+.help-box {
+    background-color: white;
+    border-left: 5px solid #1e3a5f;
+    padding: 12px 18px;
+    margin-top: 25px;
+    border-radius: 8px;
+}
+
+.help-box summary {
+    cursor: pointer;
+    font-weight: bold;
+    color: #1e3a5f;
+}
+
+.help-box p {
+    margin: 10px 0 0 0;
+}
+
+/* --- Video section --- */
+.video-box {
+    background-color: white;
+    padding: 25px;
+    margin-top: 25px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+}
+
+.video-box iframe {
+    max-width: 100%;
+    border-radius: 8px;
+}
+
+
+
+
+/* 1. DESCENDANT SELECTOR: any td inside the expenses list */
+.expenses-list td {
+    color: #222;
+}
+
+/* 2. DIRECT CHILD SELECTOR: inputs that are direct children of form */
+.expense-form > form > input {
+    border-left: 4px solid #1e3a5f;
+}
+
+/* 3. POSITION PSEUDO-CLASS: the first row of the table body */
+.expenses-list tbody tr:first-child {
+    font-weight: bold;
+}
+
+/* 4. NEGATION PSEUDO-CLASS: inputs that are not number fields */
+.expense-form input:not([type="number"]) {
+    background-color: #fffdf5;
+}
+
+/* 5. FOCUS STATE: highlight the field the user is typing in */
+.expense-form input:focus,
+.expense-form select:focus {
+    outline: none;
+    border-color: #1e3a5f;
+    box-shadow: 0 0 0 3px rgba(30, 58, 95, 0.2);
 }

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,37 +9,108 @@
 </head>
 <body>
 
-    <!-- Main Heading -->
+    <!-- Main Heading (now with logo) -->
     <header id="main-header">
+        
         <h1>My Budget Tracker</h1>
         <p>Track your income and expenses in one place.</p>
     </header>
 
     <main>
 
-        <!-- Add Expense Section -->
+        <!-- Collapsible help section -->
+        <details class="help-box">
+            <summary>How to use this tracker</summary>
+            <p>
+                Fill in the expense name, amount and category below,
+                then click Add Expense. For now the button does not save
+                anything — the saving part will be added when we learn
+                JavaScript in Week 6.
+            </p>
+        </details>
+
+        <!-- Add Expense Section (upgraded) -->
         <section class="expense-form">
             <h2>Add Expense</h2>
 
-            <label for="expense-name">Expense Name</label>
-            <input type="text" id="expense-name"
-                   placeholder="Enter expense name">
+            <form>
+                <label for="expense-name">Expense Name</label>
+                <input type="text" id="expense-name"
+                       placeholder="Enter expense name">
 
-            <label for="expense-amount">Amount (KSh)</label>
-            <input type="number" id="expense-amount"
-                   placeholder="Enter amount">
+                <label for="expense-amount">Amount (KSh)</label>
+                <input type="number" id="expense-amount"
+                       placeholder="Enter amount">
 
-            <label for="expense-category">Category</label>
-            <input type="text" id="expense-category"
-                   placeholder="Enter category">
+                <label for="expense-category">Category</label>
+                <select id="expense-category">
+                    <option value="food">Food</option>
+                    <option value="transport">Transport</option>
+                    <option value="rent">Rent</option>
+                    <option value="entertainment">Entertainment</option>
+                    <option value="other">Other</option>
+                </select>
 
+                <button type="button" id="add-expense-btn">Add Expense</button>
+            </form>
         </section>
 
-        <!-- Your Expenses Section -->
+        <!-- Your Expenses Section (now a table) -->
         <section class="expenses-list">
             <h2>Your Expenses</h2>
 
-            <p>No expenses yet.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Amount</th>
+                        <th>Category</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Groceries</td>
+                        <td>KSh 1,200</td>
+                        <td>Food</td>
+                        <td>2024-05-01</td>
+                    </tr>
+                    <tr>
+                        <td>Matatu fare</td>
+                        <td>KSh 150</td>
+                        <td>Transport</td>
+                        <td>2024-05-02</td>
+                    </tr>
+                    <tr>
+                        <td>House rent</td>
+                        <td>KSh 8,000</td>
+                        <td>Rent</td>
+                        <td>2024-05-03</td>
+                    </tr>
+                    <tr>
+                        <td>Cinema</td>
+                        <td>KSh 500</td>
+                        <td>Entertainment</td>
+                        <td>2024-05-04</td>
+                    </tr>
+                    <tr>
+                        <td>Phone charger</td>
+                        <td>KSh 350</td>
+                        <td>Other</td>
+                        <td>2024-05-05</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Budgeting tip video -->
+        <section class="video-box">
+            <h2>Budgeting Tip of the Week</h2>
+            <iframe width="560" height="315"
+                    src="https://www.youtube.com/embed/2X0B8JfQxI8"
+                    title="Budgeting tips for beginners"
+                    frameborder="0"
+                    allowfullscreen></iframe>
         </section>
 
     </main>
