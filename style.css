@@ -1,201 +1,279 @@
 
+/* ---------- 1. COLOR PALETTE (CSS variables) ---------- */
+:root {
+    --primary: #1e3a5f;        /* deep navy — headings, buttons, table header */
+    --primary-light: #2e5a8a;  /* lighter navy — hover states */
+    --accent: #27ae60;         /* green — success highlights */
+    --accent-light: #e8f5e9;   /* soft green — section background */
+    --text-dark: #222831;      /* body text */
+    --text-muted: #6b7280;     /* secondary text */
+    --bg-page: #f0f4f8;        /* page background */
+    --bg-card: #ffffff;        /* card background */
+    --border-color: #d1d9e6;   /* subtle borders */
+    --row-alt: #eef3f9;        /* alternating table row */
+}
 
-/* General Page Styling */
+/* ---------- 2. TYPOGRAPHY ---------- */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f6f9;
+    font-family: 'Lato', Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--text-dark);
+    background-color: var(--bg-page);
     margin: 0;
-    padding: 20px;
+    padding: 30px 20px;
 }
 
-/* ID Selector */
-#main-header {
-    background-color: #1e3a5f;
-    color: white;
-    text-align: center;
-    padding: 30px;
-    border-radius: 10px;
+h1, h2 {
+    font-family: 'Poppins', Arial, sans-serif;
+    color: var(--primary);
+    margin-top: 0;
 }
 
-/* Main Heading */
 h1 {
-    font-size: 32px;
-    margin-bottom: 10px;
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
 }
 
-/* Class Selector: Add Expense */
-.expense-form {
-    background-color: white;
-    padding: 25px;
-    margin-top: 25px;
-    border-radius: 10px;
-    border: 1px solid #ddd;
-}
-
-/* Input Fields */
-input {
-    display: block;
-    width: 100%;
-    padding: 12px;
-    margin-top: 8px;
-    margin-bottom: 18px;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-/* Class Selector: Your Expenses */
-.expenses-list {
-    background-color: #e8f5e9;
-    padding: 25px;
-    margin-top: 25px;
-    border-radius: 10px;
-    border: 1px solid #c8e6c9;
-}
-
-/* Element Selector */
 h2 {
-    color: #1e3a5f;
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 18px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--accent-light);
 }
 
 label {
-    font-weight: bold;
+    font-family: 'Lato', Arial, sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
+/* ---------- 3. PAGE HEADER (card) ---------- */
+#main-header {
+    max-width: 900px;
+    margin: 0 auto 30px auto;
+    background-color: var(--primary);
+    color: white;
+    text-align: center;
+    padding: 40px 30px;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(30, 58, 95, 0.25);
+    border: 1px solid var(--primary-light);
+}
 
+#main-header h1 {
+    color: white;
+    margin-bottom: 8px;
+}
 
+#main-header p {
+    color: #c9d8ec;
+    font-size: 1.05rem;
+    margin: 0;
+}
 
-/* --- Logo inside the header --- */
 #main-header img {
     display: block;
-    margin: 0 auto 10px auto;
-    border-radius: 8px;
+    margin: 0 auto 16px auto;
+    border-radius: 50%;
+    border: 3px solid var(--accent);
 }
 
-/* --- The select dropdown should look like the inputs --- */
-select {
-    display: block;
-    width: 100%;
-    padding: 12px;
-    margin-top: 8px;
-    margin-bottom: 18px;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: white;
-    font-family: Arial, sans-serif;
+/* ---------- MAIN CONTAINER ---------- */
+main {
+    max-width: 900px;
+    margin: 0 auto;
 }
 
-/* --- The Add Expense button --- */
-#add-expense-btn {
-    padding: 12px 20px;
-    background-color: #1e3a5f;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;                 /* hand cursor on hover */
-    transition: background-color 0.2s ease;
-}
-
-#add-expense-btn:hover {
-    background-color: #16304f;
-}
-
-/* --- Expenses Table --- */
-.expenses-list table {
-    width: 100%;
-    border-collapse: collapse;       /* required by brief */
-    margin-top: 15px;
-    background-color: white;
-}
-
-/* Borders and padding inside every cell */
-.expenses-list th,
-.expenses-list td {
-    border: 1px solid #999;
-    padding: 10px 14px;
-    text-align: left;
-}
-
-/* Colored header row */
-.expenses-list thead th {
-    background-color: #1e3a5f;
-    color: white;
-    font-weight: bold;
-}
-
-/* Alternating row colors */
-.expenses-list tbody tr:nth-child(even) {
-    background-color: #dbe7f3;
-}
-
-/* Row hover effect */
-.expenses-list tbody tr:hover {
-    background-color: #c3d8ec;
-    transition: background-color 0.2s ease;
-}
-
-/* --- Collapsible help box --- */
+/* ---------- 4. HELP BOX (details/summary) ---------- */
 .help-box {
-    background-color: white;
-    border-left: 5px solid #1e3a5f;
-    padding: 12px 18px;
-    margin-top: 25px;
-    border-radius: 8px;
+    background-color: var(--bg-card);
+    border-left: 5px solid var(--accent);
+    padding: 16px 22px;
+    margin-bottom: 30px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
 .help-box summary {
     cursor: pointer;
-    font-weight: bold;
-    color: #1e3a5f;
+    font-family: 'Poppins', Arial, sans-serif;
+    font-weight: 600;
+    color: var(--primary);
 }
 
 .help-box p {
-    margin: 10px 0 0 0;
+    margin: 12px 0 0 0;
+    color: var(--text-muted);
 }
 
-/* --- Video section --- */
-.video-box {
-    background-color: white;
-    padding: 25px;
-    margin-top: 25px;
+/* ---------- 5. ADD EXPENSE FORM (card) ---------- */
+.expense-form {
+    background-color: var(--bg-card);
+    padding: 30px;
+    margin-bottom: 30px;
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+.expense-form form {
+    display: flex;
+    flex-direction: column;
+}
+
+.expense-form label {
+    margin-top: 16px;
+    margin-bottom: 6px;
+}
+
+.expense-form input,
+.expense-form select {
+    font-family: 'Lato', Arial, sans-serif;
+    font-size: 1rem;
+    color: var(--text-dark);
+    background-color: #fafbfc;
+    padding: 12px 14px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.expense-form input:focus,
+.expense-form select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(30, 58, 95, 0.15);
+    background-color: #ffffff;
+}
+
+/* Button styling */
+#add-expense-btn {
+    margin-top: 24px;
+    padding: 14px 24px;
+    font-family: 'Poppins', Arial, sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: white;
+    background-color: var(--accent);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    letter-spacing: 0.3px;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+#add-expense-btn:hover {
+    background-color: #229954;
+}
+
+#add-expense-btn:active {
+    transform: scale(0.98);
+}
+
+/* ---------- 6. EXPENSES TABLE (card) ---------- */
+.expenses-list {
+    background-color: var(--bg-card);
+    padding: 30px;
+    margin-bottom: 30px;
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+.expenses-list table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    overflow: hidden;
     border-radius: 10px;
-    border: 1px solid #ddd;
+}
+
+/* Table cells */
+.expenses-list th,
+.expenses-list td {
+    padding: 14px 18px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* Header row */
+.expenses-list thead th {
+    background-color: var(--primary);
+    color: white;
+    font-family: 'Poppins', Arial, sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    border-bottom: none;
+}
+
+/* Alternating rows */
+.expenses-list tbody tr:nth-child(even) {
+    background-color: var(--row-alt);
+}
+
+/* Row hover */
+.expenses-list tbody tr:hover {
+    background-color: #d6e4f0;
+    transition: background-color 0.15s ease;
+}
+
+/* Remove bottom border from last row for cleaner look */
+.expenses-list tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Highlight amount column with accent color */
+.expenses-list td:nth-child(2) {
+    font-weight: 700;
+    color: var(--primary);
+}
+
+/* ---------- 7. VIDEO SECTION (card) ---------- */
+.video-box {
+    background-color: var(--bg-card);
+    padding: 30px;
+    margin-bottom: 30px;
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
 }
 
 .video-box iframe {
     max-width: 100%;
-    border-radius: 8px;
+    border-radius: 10px;
+    display: block;
+    margin-top: 10px;
 }
 
-
-
-
-/* 1. DESCENDANT SELECTOR: any td inside the expenses list */
-.expenses-list td {
-    color: #222;
-}
-
-/* 2. DIRECT CHILD SELECTOR: inputs that are direct children of form */
-.expense-form > form > input {
-    border-left: 4px solid #1e3a5f;
-}
-
-/* 3. POSITION PSEUDO-CLASS: the first row of the table body */
-.expenses-list tbody tr:first-child {
-    font-weight: bold;
-}
-
-/* 4. NEGATION PSEUDO-CLASS: inputs that are not number fields */
-.expense-form input:not([type="number"]) {
-    background-color: #fffdf5;
-}
-
-/* 5. FOCUS STATE: highlight the field the user is typing in */
-.expense-form input:focus,
-.expense-form select:focus {
-    outline: none;
-    border-color: #1e3a5f;
-    box-shadow: 0 0 0 3px rgba(30, 58, 95, 0.2);
+/* ---------- RESPONSIVE TOUCH ---------- */
+@media (max-width: 600px) {
+    body {
+        padding: 16px 12px;
+    }
+    h1 {
+        font-size: 1.7rem;
+    }
+    .expense-form,
+    .expenses-list,
+    .video-box,
+    #main-header {
+        padding: 20px;
+        border-radius: 12px;
+    }
+    .expenses-list th,
+    .expenses-list td {
+        padding: 10px 12px;
+        font-size: 0.9rem;
+    }
 }
