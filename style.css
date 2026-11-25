@@ -371,3 +371,84 @@ img { display: block; }
         color: #0f172a;
     }
 }
+
+/* ============================================================
+   WEEK 7 ADDITIONS
+   ============================================================ */
+
+/* Budget setup bar */
+.budget-setup {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 22px;
+    box-shadow: var(--shadow-sm);
+}
+
+.budget-setup label {
+    font-weight: 700;
+    color: var(--brand);
+}
+
+.budget-setup input {
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 1rem;
+    max-width: 200px;
+}
+
+.budget-setup button {
+    padding: 10px 18px;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.budget-setup button:hover { background: var(--accent-hover); }
+
+/* Form layout */
+.form-row { margin-bottom: 14px; display: flex; flex-direction: column; gap: 6px; }
+
+/* Form message (success / error feedback) */
+.form-message {
+    margin-top: 12px;
+    font-size: 0.9rem;
+    min-height: 1.2em;
+}
+.form-message.success { color: var(--accent); font-weight: 700; }
+.form-message.error   { color: #c0392b; font-weight: 700; }
+
+/* Empty state */
+.empty-state {
+    text-align: center;
+    color: var(--text-secondary);
+    padding: 30px 0;
+    font-style: italic;
+}
+
+/* Table action button */
+.delete-btn {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: background 0.2s ease;
+}
+.delete-btn:hover { background: #c0392b; }
+
+/* Color-coded summary boxes */
+.summary-box.positive p { color: var(--accent); }
+.summary-box.warning  p { color: #e67e22; }
+.summary-box.danger   p { color: #c0392b; }

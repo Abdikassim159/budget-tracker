@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SpendWise — Dashboard</title>
+    <title>SpendWise — Interactive Dashboard</title>
 
-    <!-- Google Fonts: Poppins for headings, Lato for body -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
@@ -14,10 +13,6 @@
 </head>
 <body>
 
-    <!-- ============================================
-         DASHBOARD SHELL
-         Uses CSS Grid: sidebar | main area
-         ============================================ -->
     <div class="dashboard">
 
         <!-- ---------- SIDEBAR ---------- -->
@@ -28,32 +23,19 @@
             </div>
 
             <nav class="sidebar-nav">
-                <a href="#" class="nav-item active">
-                    <span class="nav-icon">📊</span> Dashboard
-                </a>
-                <a href="#" class="nav-item">
-                    <span class="nav-icon">💸</span> Expenses
-                </a>
-                <a href="#" class="nav-item">
-                    <span class="nav-icon">💰</span> Income
-                </a>
-                <a href="#" class="nav-item">
-                    <span class="nav-icon">🎯</span> Savings
-                </a>
-                <a href="#" class="nav-item">
-                    <span class="nav-icon">⚙️</span> Settings
-                </a>
+                <a href="#" class="nav-item active"><span class="nav-icon">📊</span> Dashboard</a>
+                <a href="#" class="nav-item"><span class="nav-icon">💸</span> Expenses</a>
+                <a href="#" class="nav-item"><span class="nav-icon">💰</span> Income</a>
+                <a href="#" class="nav-item"><span class="nav-icon">🎯</span> Savings</a>
+                <a href="#" class="nav-item"><span class="nav-icon">⚙️</span> Settings</a>
             </nav>
 
-            <div class="sidebar-footer">
-                <p>© 2024 SpendWise</p>
-            </div>
+            <div class="sidebar-footer"><p>© 2024 SpendWise</p></div>
         </aside>
 
-        <!-- ---------- MAIN AREA ---------- -->
+        <!-- ---------- MAIN ---------- -->
         <main class="main-content">
 
-            <!-- Header -->
             <header class="topbar">
                 <div class="topbar-title">
                     <h1>Dashboard</h1>
@@ -68,83 +50,94 @@
                 </div>
             </header>
 
-            <!-- Category cards grid -->
-            <section class="card-grid">
-
-                <article class="card" tabindex="0">
-                    <div class="card-top">
-                        <span class="card-icon">🍔</span>
-                        <span class="card-category">Food</span>
-                    </div>
-                    <p class="card-amount">KSh 12,400</p>
-                    <p class="card-note">+4% from last month</p>
-                </article>
-
-                <article class="card" tabindex="0">
-                    <div class="card-top">
-                        <span class="card-icon">🚌</span>
-                        <span class="card-category">Transport</span>
-                    </div>
-                    <p class="card-amount">KSh 4,200</p>
-                    <p class="card-note">-2% from last month</p>
-                </article>
-
-                <article class="card" tabindex="0">
-                    <div class="card-top">
-                        <span class="card-icon">🏠</span>
-                        <span class="card-category">Rent</span>
-                    </div>
-                    <p class="card-amount">KSh 25,000</p>
-                    <p class="card-note">Fixed monthly cost</p>
-                </article>
-
-                <article class="card" tabindex="0">
-                    <div class="card-top">
-                        <span class="card-icon">🎬</span>
-                        <span class="card-category">Entertainment</span>
-                    </div>
-                    <p class="card-amount">KSh 3,150</p>
-                    <p class="card-note">+12% from last month</p>
-                </article>
-
-                <article class="card" tabindex="0">
-                    <div class="card-top">
-                        <span class="card-icon">🏦</span>
-                        <span class="card-category">Savings</span>
-                    </div>
-                    <p class="card-amount">KSh 8,500</p>
-                    <p class="card-note">Goal: KSh 10,000</p>
-                </article>
-
-                <article class="card" tabindex="0">
-                    <div class="card-top">
-                        <span class="card-icon">💡</span>
-                        <span class="card-category">Utilities</span>
-                    </div>
-                    <p class="card-amount">KSh 2,750</p>
-                    <p class="card-note">Due in 5 days</p>
-                </article>
-
+            <!-- ---------- BUDGET SETUP ---------- -->
+            <section class="budget-setup">
+                <label for="budget-input">Monthly Budget (KSh)</label>
+                <input type="number" id="budget-input" placeholder="e.g. 40000" min="0">
+                <button type="button" id="set-budget-btn">Set Budget</button>
             </section>
 
-            <!-- Quick summary row (still shell only) -->
+            <!-- ---------- ADD EXPENSE FORM (interactive) ---------- -->
+            <section class="expense-form">
+                <h2>Add Expense</h2>
+                <form id="expense-form">
+                    <div class="form-row">
+                        <label for="expense-name">Expense Name</label>
+                        <input type="text" id="expense-name" placeholder="e.g. Groceries" required>
+                    </div>
+
+                    <div class="form-row">
+                        <label for="expense-amount">Amount (KSh)</label>
+                        <input type="number" id="expense-amount" placeholder="e.g. 1200" min="0" step="0.01" required>
+                    </div>
+
+                    <div class="form-row">
+                        <label for="expense-category">Category</label>
+                        <select id="expense-category" required>
+                            <option value="food">Food</option>
+                            <option value="transport">Transport</option>
+                            <option value="rent">Rent</option>
+                            <option value="entertainment">Entertainment</option>
+                            <option value="utilities">Utilities</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-row">
+                        <label for="expense-date">Date</label>
+                        <input type="date" id="expense-date" required>
+                    </div>
+
+                    <button type="submit" id="add-expense-btn">Add Expense</button>
+                </form>
+
+                <p id="form-message" class="form-message" aria-live="polite"></p>
+            </section>
+
+            <!-- ---------- EXPENSES TABLE ---------- -->
+            <section class="expenses-list">
+                <h2>Your Expenses</h2>
+                <p id="empty-state" class="empty-state">No expenses yet. Add your first one above!</p>
+                <table id="expenses-table" hidden>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Amount</th>
+                            <th>Category</th>
+                            <th>Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="expenses-tbody"></tbody>
+                </table>
+            </section>
+
+            <!-- ---------- SUMMARY ROW ---------- -->
             <section class="summary-row">
                 <div class="summary-box">
+                    <h2>Monthly Budget</h2>
+                    <p id="summary-budget">KSh 0</p>
+                </div>
+                <div class="summary-box">
                     <h2>Total Spent</h2>
-                    <p>KSh 56,000</p>
+                    <p id="summary-spent">KSh 0</p>
                 </div>
-                <div class="summary-box">
-                    <h2>Budget Left</h2>
-                    <p>KSh 14,000</p>
+                <div class="summary-box" id="balance-box">
+                    <h2>Remaining Balance</h2>
+                    <p id="summary-balance">KSh 0</p>
                 </div>
-                <div class="summary-box">
-                    <h2>Savings Rate</h2>
-                    <p>15%</p>
+            </section>
+
+            <section class="summary-row">
+                <div class="summary-box" id="feedback-box">
+                    <h2>Budget Status</h2>
+                    <p id="summary-feedback">Set a budget to see your status.</p>
                 </div>
             </section>
 
         </main>
     </div>
-  <script src="script.js"></script>
+
+    <script src="script.js"></script>
 </body>
 </html>

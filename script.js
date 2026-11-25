@@ -1,132 +1,207 @@
 
-/* ---------- 1. APPLICATION DATA (variables) ---------- */
-// Use `const` for values that should not be reassigned.
-const appName = "SpendWise";
+/* ---------- 1. STATE (data) ---------- */
+const state = {
+  budget: 0,
+  expenses: []   // array of { id, name, amount, category, date }
+};
+
 const currency = "KSh";
+let nextId = 1;
 
-// Use `let` for values that will change as the user interacts.
-let monthlyBudget = 0;
-let totalExpenses = 0;
-let remainingBalance = 0;
+/* ---------- 2. DOM ELEMENT REFERENCES ---------- */
+const budgetInput     = document.getElementById("budget-input");
+const setBudgetBtn    = document.getElementById("set-budget-btn");
 
-// A list to hold expense objects (array of objects).
-const expenses = [];
+const expenseForm     = document.getElementById("expense-form");
+const nameInput       = document.getElementById("expense-name");
+const amountInput     = document.getElementById("expense-amount");
+const categoryInput   = document.getElementById("expense-category");
+const dateInput       = document.getElementById("expense-date");
+const formMessage     = document.getElementById("form-message");
 
-/* ---------- 2. REUSABLE FUNCTIONS ---------- */
+const expensesTable   = document.getElementById("expenses-table");
+const expensesTbody   = document.getElementById("expenses-tbody");
+const emptyState      = document.getElementById("empty-state");
 
-/**
- * Ask the user for a number. Keeps asking until they give a valid one.
- * @param {string} message - prompt shown to the user
- * @returns {number} a valid non-negative number
- */
-function getNumberFromUser(message) {
-  let value = prompt(message);
+const summaryBudget   = document.getElementById("summary-budget");
+const summarySpent    = document.getElementById("summary-spent");
+const summaryBalance  = document.getElementById("summary-balance");
+const summaryFeedback = document.getElementById("summary-feedback");
+const balanceBox      = document.getElementById("balance-box");
+const feedbackBox     = document.getElementById("feedback-box");
 
-  // Keep prompting if the user cancels or enters something invalid.
-  while (value === null || value.trim() === "" || isNaN(Number(value)) || Number(value) < 0) {
-    value = prompt(message);
-  }
-  return Number(value);
+/* ---------- 3. HELPER FUNCTIONS ---------- */
+
+function formatCurrency(amount) {
+  return currency + " " + Number(amount).toLocaleString("en-KE", {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2
+  });
 }
 
-/**
- * Ask the user for a text value (like an expense name or category).
- * @param {string} message - prompt shown to the user
- * @returns {string} non-empty text
- */
-function getTextFromUser(message) {
-  let value = prompt(message);
-  while (value === null || value.trim() === "") {
-    value = prompt(message);
-  }
-  return value.trim();
-}
-
-/**
- * Calculate the remaining balance.
- * @param {number} budget - the user's monthly budget
- * @param {number} spent - total of all expenses
- * @returns {number} budget - spent
- */
-function calculateBalance(budget, spent) {
-  return budget - spent;
-}
-
-/**
- * Add up all expense amounts in the expenses array.
- * @param {Array} list - array of {name, amount, category} objects
- * @returns {number} total amount spent
- */
+// LOOP: sum all expense amounts
 function calculateTotalExpenses(list) {
   let total = 0;
   for (let i = 0; i < list.length; i++) {
-    total = total + list[i].amount;
+    total += Number(list[i].amount);
   }
   return total;
 }
 
-/**
- * Format a number as currency, e.g. 28000 -> "KSh 28,000".
- * @param {number} amount
- * @returns {string}
- */
-function formatCurrency(amount) {
-  return currency + " " + amount.toLocaleString("en-KE");
-}
-
-/**
- * Print a clear summary to the console.
- */
-function printSummary() {
-  console.log("========================================");
-  console.log("         " + appName + " SUMMARY        ");
-  console.log("========================================");
-  console.log("Monthly Budget   : " + formatCurrency(monthlyBudget));
-  console.log("Total Expenses   : " + formatCurrency(totalExpenses));
-  console.log("Remaining Balance: " + formatCurrency(remainingBalance));
-  console.log("----------------------------------------");
-
-  if (remainingBalance < 0) {
-    console.log("⚠️  You are over budget by " + formatCurrency(Math.abs(remainingBalance)));
-  } else if (remainingBalance === 0) {
-    console.log("⚠️  You have exactly used your full budget.");
-  } else {
-    console.log("✅ You still have " + formatCurrency(remainingBalance) + " left.");
+// CONDITIONAL: decide status based on budget vs spent
+function getBudgetStatus(budget, spent) {
+  if (budget === 0) {
+    return { type: "neutral", message: "Set a budget to see your status." };
   }
-  console.log("========================================");
+  const remaining = budget - spent;
+  if (remaining < 0) {
+    return { type: "danger", message: "⚠️ You are over budget by " + formatCurrency(Math.abs(remaining)) };
+  }
+  if (remaining === 0) {
+    return { type: "warning", message: "⚠️ Budget fully used — no money left." };
+  }
+  if (remaining < budget * 0.2) {
+    return { type: "warning", message: "⚠️ Only " + formatCurrency(remaining) + " left — slow down." };
+  }
+  return { type: "positive", message: "✅ You still have " + formatCurrency(remaining) + " left." };
 }
 
-/* ---------- 3. MAIN FLOW ---------- */
+/* ---------- 4. RENDER FUNCTIONS ---------- */
 
-function startSpendWise() {
-  console.log("👋 Welcome to " + appName + "!");
+function renderSummary() {
+  const totalSpent = calculateTotalExpenses(state.expenses);
+  const remaining  = state.budget - totalSpent;
 
-  // Collect the monthly budget
-  monthlyBudget = getNumberFromUser("What is your monthly budget (" + currency + ")?");
+  summaryBudget.textContent = formatCurrency(state.budget);
+  summarySpent.textContent  = formatCurrency(totalSpent);
+  summaryBalance.textContent = formatCurrency(remaining);
 
-  // Collect expenses in a loop until the user cancels
-  let keepGoing = true;
-  while (keepGoing) {
-    const name = getTextFromUser("Expense name (or Cancel to finish):");
-    const amount = getNumberFromUser("Amount spent on '" + name + "' (" + currency + "):");
-    const category = getTextFromUser("Category (Food, Transport, Rent, etc.):");
+  // reset color classes
+  balanceBox.classList.remove("positive", "warning", "danger");
+  feedbackBox.classList.remove("positive", "warning", "danger");
 
-    expenses.push({ name: name, amount: amount, category: category });
-    console.log("✔ Added: " + name + " — " + formatCurrency(amount) + " [" + category + "]");
+  // CONDITIONAL: add appropriate color + message
+  const status = getBudgetStatus(state.budget, totalSpent);
+  summaryFeedback.textContent = status.message;
 
-    keepGoing = confirm("Add another expense?");
+  if (status.type === "danger") {
+    balanceBox.classList.add("danger");
+    feedbackBox.classList.add("danger");
+  } else if (status.type === "warning") {
+    balanceBox.classList.add("warning");
+    feedbackBox.classList.add("warning");
+  } else if (status.type === "positive") {
+    balanceBox.classList.add("positive");
+    feedbackBox.classList.add("positive");
+  }
+}
+
+function renderTable() {
+  // clear existing rows
+  expensesTbody.innerHTML = "";
+
+  // CONDITIONAL: show either empty state or table
+  if (state.expenses.length === 0) {
+    emptyState.hidden = false;
+    expensesTable.hidden = true;
+    return;
   }
 
-  // Calculations using reusable functions
-  totalExpenses = calculateTotalExpenses(expenses);
-  remainingBalance = calculateBalance(monthlyBudget, totalExpenses);
+  emptyState.hidden = true;
+  expensesTable.hidden = false;
 
-  // Show results
-  printSummary();
+  // LOOP: build a row for each expense
+  for (let i = 0; i < state.expenses.length; i++) {
+    const exp = state.expenses[i];
+    const row = document.createElement("tr");
 
-  // Also show the raw data for reference
-  console.log("Raw expense data:", expenses);
+    row.innerHTML = `
+      <td>${exp.name}</td>
+      <td>${formatCurrency(exp.amount)}</td>
+      <td>${capitalize(exp.category)}</td>
+      <td>${exp.date}</td>
+      <td><button class="delete-btn" data-id="${exp.id}">Delete</button></td>
+    `;
+
+    expensesTbody.appendChild(row);
+  }
 }
 
-// Kick off the app when the page loads
-startSpendWise();
+function capitalize(text) {
+  return text.charAt(0).toUpperCase() + text.slice(1);
+}
+
+/* ---------- 5. EVENT HANDLERS ---------- */
+
+// Set budget
+setBudgetBtn.addEventListener("click", () => {
+  const value = Number(budgetInput.value);
+
+  // CONDITIONAL: validate input
+  if (!value || value <= 0) {
+    formMessage.textContent = "Please enter a valid budget amount.";
+    formMessage.className = "form-message error";
+    return;
+  }
+
+  state.budget = value;
+  formMessage.textContent = "Budget set to " + formatCurrency(value);
+  formMessage.className = "form-message success";
+
+  budgetInput.value = "";
+  renderSummary();
+});
+
+// Submit expense form
+expenseForm.addEventListener("submit", (event) => {
+  event.preventDefault();   // stop page reload
+
+  const name   = nameInput.value.trim();
+  const amount = Number(amountInput.value);
+  const cat    = categoryInput.value;
+  const date   = dateInput.value;
+
+  // CONDITIONAL: validate
+  if (!name || !amount || amount <= 0 || !date) {
+    formMessage.textContent = "Please fill in all fields with valid values.";
+    formMessage.className = "form-message error";
+    return;
+  }
+
+  // push new expense object into the ARRAY
+  state.expenses.push({
+    id: nextId++,
+    name: name,
+    amount: amount,
+    category: cat,
+    date: date
+  });
+
+  formMessage.textContent = "Added: " + name + " — " + formatCurrency(amount);
+  formMessage.className = "form-message success";
+
+  expenseForm.reset();
+  renderTable();
+  renderSummary();
+});
+
+// Delete a row (EVENT DELEGATION on the tbody)
+expensesTbody.addEventListener("click", (event) => {
+  if (event.target.classList.contains("delete-btn")) {
+    const id = Number(event.target.getAttribute("data-id"));
+    // LOOP: find and remove the matching expense
+    for (let i = 0; i < state.expenses.length; i++) {
+      if (state.expenses[i].id === id) {
+        state.expenses.splice(i, 1);
+        break;
+      }
+    }
+    renderTable();
+    renderSummary();
+  }
+});
+
+/* ---------- 6. INITIAL RENDER ---------- */
+renderTable();
+renderSummary();
+console.log("✅ SpendWise interactive version loaded.");
