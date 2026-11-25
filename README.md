@@ -21,7 +21,7 @@ browser with JavaScript — no backend required.
 
 ## GitHub Repository Information
 
-Repository URL: https://github.com/your-username/spendwise
+Repository URL: https://github.com/Abdikassim159/budget-tracker
 
 The repository is public and contains all project files:
 `index.html`, `style.css`, `script.js`, `logo.png`, and this `README.md`.
