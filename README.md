@@ -1,70 +1,81 @@
-# SpendWise — Dashboard Shell (Week 4)
+# SpendWise — JavaScript Foundation (Week 6)
 
-This is the dashboard shell for my SpendWise capstone project. It uses
-CSS Grid and Flexbox to build a modern dashboard layout. No JavaScript
-yet — just the visual structure with realistic static data.
+This is my SpendWise capstone project. In Week 4 I built the dashboard
+shell with HTML and CSS. In Week 6 I added JavaScript so the app can
+actually process budgeting data.
 
-## What's on the page
+## What SpendWise does
 
-- A **sidebar** with the SpendWise logo, five navigation links
-  (Dashboard, Expenses, Income, Savings, Settings) and a small footer.
-- A **topbar/header** with the page title, a subtitle, a notification
-  button and a user chip showing the user's initials and name.
-- **Six category cards** showing realistic KSh amounts for Food,
-  Transport, Rent, Entertainment, Savings and Utilities, each with a
-  short trend note.
-- A **summary row** with three boxes: Total Spent, Budget Left,
-  Savings Rate.
+SpendWise is a small budgeting tool. It asks the user for a monthly
+budget, then lets them enter expenses one by one (name, amount,
+category). After they finish, it calculates the total spent and the
+remaining balance, and prints a clear summary in the browser console.
 
-## How the layout works
+## JavaScript concepts implemented
 
-- The **overall page** uses CSS **Grid**: `grid-template-columns: 240px 1fr`
-  so the sidebar takes 240px and the main area fills the rest.
-- The **card grid** uses CSS Grid with `repeat(auto-fit, minmax(220px, 1fr))`
-  so cards automatically fit the available width.
-- The **sidebar, header, each card and the summary row** use **Flexbox**
-  to arrange their inner content.
-- **No absolute positioning** is used for the layout.
+- Variables (`const` and `let`)
+- Data types: strings, numbers, arrays, objects
+- User input via `prompt()` and `confirm()`
+- Type conversion with `Number()` and `isNaN()`
+- Arithmetic calculations
+- Reusable functions with parameters and return values
+- Loops (`while`, `for`)
+- Console output with `console.log()`
 
-## Theme
+## How variables are used
 
-All colors live in `:root` as CSS variables:
+At the top of `script.js` I declare:
 
-- `--brand` — brand navy
-- `--accent` — green accent
-- `--surface` / `--bg-page` — white card surface, page background
-- `--text-primary` / `--text-secondary` — main and muted text
+- `appName` and `currency` with `const` because they never change.
+- `monthlyBudget`, `totalExpenses` and `remainingBalance` with `let`
+  because they get updated after the user provides data.
+- `expenses` as a `const` array because the array itself is not
+  replaced — I only push new items into it.
 
-They are reused everywhere so the design stays consistent.
+## How user input is collected
 
-## Responsive
+I use `prompt()` for text and numbers, and `confirm()` to ask whether
+the user wants to add another expense. Two small helper functions
+(`getNumberFromUser` and `getTextFromUser`) keep asking until the user
+enters something valid, so bad input is not accepted.
 
-Below **768px** the layout collapses into a single column: the sidebar
-turns into a horizontal top bar, the header stacks, and the cards
-reflow into a single column. This was tested with the browser DevTools
-Device Toolbar.
+## How calculations are performed
 
-## Micro-interactions
+The main calculation is:
 
-Each card has `tabindex="0"` so it can be focused with the keyboard.
-Cards animate on both `:hover` and `:focus` using `transform:
-translateY(-4px)` and an increased `box-shadow`. The transition lasts
-**200ms**, which is under the required 250ms.
+    remainingBalance = monthlyBudget - totalExpenses;
 
-## Stretch goal: Dark theme
+`totalExpenses` is computed by a function called `calculateTotalExpenses`
+that loops through the `expenses` array and adds up each `amount`. The
+balance is calculated by `calculateBalance(budget, spent)`.
 
-I added a `@media (prefers-color-scheme: dark)` block that overrides
-the CSS variables in `:root`, so the whole dashboard switches to a dark
-palette automatically when the user's system prefers dark mode.
+## How functions help organize the code
+
+Instead of writing everything in one big block, I split the logic into
+small functions that each do one job:
+
+- `getNumberFromUser()` — collect and validate a number
+- `getTextFromUser()` — collect and validate text
+- `calculateBalance()` — subtract expenses from the budget
+- `calculateTotalExpenses()` — add up all amounts
+- `formatCurrency()` — display numbers as "KSh 28,000"
+- `printSummary()` — print the final summary
+
+This makes the code easy to read and easy to reuse.
 
 ## Files
 
-- `index.html` — dashboard shell structure
-- `style.css` — layout, theme, responsive and animations
-- `logo.png` — SpendWise logo (small square icon in the sidebar)
+- `index.html` — dashboard shell (from Week 4) plus the script tag
+- `style.css` — styling from Week 4
+- `script.js` — all JavaScript logic (new this week)
 - `README.md` — this file
 
-## How to open
+## How to test
 
-Open `index.html` in any browser. Toggle dark mode in your OS settings
-to see the dark theme.
+1. Open `index.html` in a browser.
+2. Press F12 (or right-click → Inspect) and open the **Console** tab.
+3. Answer the prompt for your monthly budget (e.g. 40000).
+4. Enter an expense name (e.g. "Groceries"), amount (e.g. 1200),
+   category (e.g. "Food").
+5. Click **OK** to add another, or **Cancel** to finish.
+6. The final summary appears in the console.
